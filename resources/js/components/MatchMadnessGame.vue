@@ -282,8 +282,8 @@ export default {
           this.nextPairIndex++;
           
           // Replace the faded words
-          this.$set(this.leftWords, leftIndex, { ...nextPair, fading: false });
-          this.$set(this.rightWords, rightIndex, { ...nextPair, fading: false });
+          this.leftWords[leftIndex] = { ...nextPair, fading: false };
+          this.rightWords[rightIndex] = { ...nextPair, fading: false };
         } else {
           // No more words, remove the slots
           this.leftWords[leftIndex] = { danish: '', english: '', id: -1, fading: true };

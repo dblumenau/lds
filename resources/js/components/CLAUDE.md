@@ -102,9 +102,11 @@ Components are used within a Vue mount point:
 
 Components follow Vue 3 best practices:
 - Simple components: Scoped styles with `<style scoped>`
-- Complex components: External SCSS with `<style lang="scss" scoped>` importing `./ComponentName.scss`
+- Complex components: External SCSS with `<style lang="scss" scoped>` using `@use './ComponentName.scss' as *;`
 - All use Tailwind CSS utility classes where appropriate
 - Custom CSS for animations (e.g., card flips, fade effects)
+
+**Note**: Use `@use` instead of `@import` for SCSS files to avoid deprecation warnings in Dart Sass 3.0+
 
 ## Development Requirements
 

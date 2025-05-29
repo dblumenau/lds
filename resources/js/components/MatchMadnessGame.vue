@@ -398,5 +398,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './MatchMadnessGame.scss';
+@use './MatchMadnessGame.scss' as *;
 </style>

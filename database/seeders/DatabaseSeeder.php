@@ -13,8 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Call the SuperAdminSeeder to create super admin users
+        $this->call(SuperAdminSeeder::class);
+        
+        // Create a test user if needed
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',

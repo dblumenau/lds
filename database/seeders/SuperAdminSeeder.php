@@ -13,29 +13,33 @@ class SuperAdminSeeder extends Seeder
      */
     public function run(): void
     {
-        // Make the test user we created a super admin
-        $user = User::where('email', 'testuser@example.com')->first();
-        
-        if ($user) {
-            $user->update([
-                'is_superadmin' => true,
-                'is_approved' => true,
-                'approved_at' => now(),
-            ]);
+        $superAdmins = [
+            [
+                'name' => 'David Blumenau',
+                'email' => 'dblumenau@gmail.com',
+            ],
+            [
+                'name' => 'Rob van der West',
+                'email' => 'robvdwest.dk@gmail.com',
+            ],
+        ];
+
+        foreach ($superAdmins as $admin) {
+            User::updateOrCreate(
+                ['email' => $admin['email']],
+                [
+                    'name' => $admin['name'],
+                    'password' => bcrypt('password'),
+                    'is_superadmin' => true,
+                    'is_approved' => true,
+                    'approved_at' => now(),
+                    'email_verified_at' => now(),
+                ]
+            );
             
-            $this->command->info('Made testuser@example.com a super admin!');
-        } else {
-            // Create a super admin if the test user doesn't exist
-            User::create([
-                'name' => 'Super Admin',
-                'email' => 'admin@example.com',
-                'password' => bcrypt('password'),
-                'is_superadmin' => true,
-                'is_approved' => true,
-                'approved_at' => now(),
-            ]);
-            
-            $this->command->info('Created admin@example.com as super admin (password: password)');
+            $this->command->info("Created/updated super admin: {$admin['email']}");
         }
+        
+        $this->command->info('Super admin users ready (default password: password)');
     }
 }

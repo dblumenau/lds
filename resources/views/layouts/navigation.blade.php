@@ -15,11 +15,29 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if(auth()->user()->isApproved())
+                        <x-nav-link :href="route('words.upload')" :active="request()->routeIs('words.upload*')">
+                            {{ __('Upload Words') }}
+                        </x-nav-link>
+                    @endif
+                    @if(auth()->user()->isSuperAdmin())
+                        <x-nav-link :href="route('admin.users.pending')" :active="request()->routeIs('admin.*')">
+                            {{ __('Admin') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <!-- Quick Logout Button -->
+                <form method="POST" action="{{ route('logout') }}" class="me-4">
+                    @csrf
+                    <button type="submit" class="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">
+                        {{ __('Log Out') }}
+                    </button>
+                </form>
+                
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -70,6 +88,16 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if(auth()->user()->isApproved())
+                <x-responsive-nav-link :href="route('words.upload')" :active="request()->routeIs('words.upload*')">
+                    {{ __('Upload Words') }}
+                </x-responsive-nav-link>
+            @endif
+            @if(auth()->user()->isSuperAdmin())
+                <x-responsive-nav-link :href="route('admin.users.pending')" :active="request()->routeIs('admin.*')">
+                    {{ __('Admin') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

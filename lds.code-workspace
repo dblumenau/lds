@@ -8,22 +8,22 @@
             "path": ".",
             "name": "LDS Workspace Root"
         },
-        {
-            "path": "resources",
-            "name": "Source Code"
-        },
-        {
-            "path": "docs",
-            "name": "Documentation"
-        },
-        {
-            "path": "tests",
-            "name": "Test Suite"
-        },
-        {
-            "path": "scripts",
-            "name": "Utility Scripts"
-        },
+        // {
+        //     "path": "resources",
+        //     "name": "Source Code"
+        // },
+        // {
+        //     "path": "docs",
+        //     "name": "Documentation"
+        // },
+        // {
+        //     "path": "tests",
+        //     "name": "Test Suite"
+        // },
+        // {
+        //     "path": "scripts",
+        //     "name": "Utility Scripts"
+        // },
         // …add more folder objects as needed
     ],
     // ─────────────────────────────────────

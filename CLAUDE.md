@@ -6,6 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Learn Danish Swiftly (LDS) - A Laravel 12 application with Vue.js components for interactivity, styled with Tailwind CSS. Uses traditional server-side rendering with Blade templates, enhanced with Vue components where needed.
 
+### Features
+- User authentication with approval system
+- Word upload functionality for approved users
+- Mini-games for learning Danish:
+  - Matching Pairs Game (Memory card game with Danish-English word pairs)
+  - Multiple Choice Quiz (planned)
+  - Word Builder (planned)
+  - Sentence Constructor (planned)
+
 ## Essential Commands
 
 ### Development
@@ -44,8 +53,12 @@ Learn Danish Swiftly (LDS) - A Laravel 12 application with Vue.js components for
 
 ### Directory Structure Notes
 - Vue components: `resources/js/components/`
+  - `MatchingPairsGame.vue` - Memory card game component
 - Blade views: `resources/views/`
-- Auth controllers: `app/Http/Controllers/Auth/`
+  - `games/` - Game-related views
+- Controllers: `app/Http/Controllers/`
+  - `GameController.php` - Handles game routes
+  - `Auth/` - Authentication controllers
 - Test files mirror app structure in `tests/`
 
 ## Development Environment

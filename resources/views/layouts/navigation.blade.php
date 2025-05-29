@@ -19,6 +19,9 @@
                         <x-nav-link :href="route('words.upload')" :active="request()->routeIs('words.upload*')">
                             {{ __('Upload Words') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('games.index')" :active="request()->routeIs('games.*')">
+                            {{ __('Games') }}
+                        </x-nav-link>
                     @endif
                     @if(auth()->user()->isSuperAdmin())
                         <x-nav-link :href="route('admin.users.pending')" :active="request()->routeIs('admin.*')">
@@ -91,6 +94,9 @@
             @if(auth()->user()->isApproved())
                 <x-responsive-nav-link :href="route('words.upload')" :active="request()->routeIs('words.upload*')">
                     {{ __('Upload Words') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('games.index')" :active="request()->routeIs('games.*')">
+                    {{ __('Games') }}
                 </x-responsive-nav-link>
             @endif
             @if(auth()->user()->isSuperAdmin())

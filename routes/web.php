@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WordUploadController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\Admin\UserApprovalController;
+use App\Http\Controllers\GameController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,6 +29,10 @@ Route::middleware(['auth', 'approved'])->group(function () {
     // Word upload feature
     Route::get('/words/upload', [WordUploadController::class, 'index'])->name('words.upload');
     Route::post('/words/upload', [WordUploadController::class, 'store'])->name('words.upload.store');
+    
+    // Games
+    Route::get('/games', [GameController::class, 'index'])->name('games.index');
+    Route::get('/games/matching-pairs', [GameController::class, 'matchingPairs'])->name('games.matching-pairs');
 });
 
 // Admin routes (super admin only)

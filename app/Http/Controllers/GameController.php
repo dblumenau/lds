@@ -15,4 +15,9 @@ class GameController extends Controller
     {
         return view('games.matching-pairs');
     }
+
+    public function matchMadness()
+    {
+        return view('games.match-madness');
+    }
 }

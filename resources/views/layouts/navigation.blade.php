@@ -12,22 +12,24 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    @auth
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        @if(auth()->user()->isApproved())
+                            <x-nav-link :href="route('words.upload')" :active="request()->routeIs('words.upload*')">
+                                {{ __('Upload Words') }}
+                            </x-nav-link>
+                        @endif
+                        @if(auth()->user()->isSuperAdmin())
+                            <x-nav-link :href="route('admin.users.pending')" :active="request()->routeIs('admin.*')">
+                                {{ __('Admin') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
+                    <x-nav-link :href="route('games.index')" :active="request()->routeIs('games.*')">
+                        {{ __('Games') }}
                     </x-nav-link>
-                    @if(auth()->user()->isApproved())
-                        <x-nav-link :href="route('words.upload')" :active="request()->routeIs('words.upload*')">
-                            {{ __('Upload Words') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('games.index')" :active="request()->routeIs('games.*')">
-                            {{ __('Games') }}
-                        </x-nav-link>
-                    @endif
-                    @if(auth()->user()->isSuperAdmin())
-                        <x-nav-link :href="route('admin.users.pending')" :active="request()->routeIs('admin.*')">
-                            {{ __('Admin') }}
-                        </x-nav-link>
-                    @endif
                 </div>
             </div>
 

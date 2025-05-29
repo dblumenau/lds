@@ -18,11 +18,13 @@
                             </div>
                         </a>
                         
-                        <!-- Multiple Choice Quiz (placeholder) -->
-                        <div class="border-2 border-gray-200 rounded-lg p-6 opacity-50 cursor-not-allowed">
-                            <h3 class="text-lg font-semibold mb-2">Multiple Choice Quiz</h3>
-                            <p class="text-gray-600">Coming soon...</p>
-                        </div>
+                        <!-- Match Madness Game -->
+                        <a href="{{ route('games.match-madness') }}" class="block">
+                            <div class="border-2 border-gray-200 rounded-lg p-6 hover:border-blue-500 transition-colors">
+                                <h3 class="text-lg font-semibold mb-2">Match Madness</h3>
+                                <p class="text-gray-600">Race against time to match Danish-English word pairs</p>
+                            </div>
+                        </a>
                         
                         <!-- More games placeholder -->
                         <div class="border-2 border-gray-200 rounded-lg p-6 opacity-50 cursor-not-allowed">

@@ -26,14 +26,15 @@ Route::middleware(['auth', 'approved'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    // Word upload feature
+    // Word upload feature (requires approval)
     Route::get('/words/upload', [WordUploadController::class, 'index'])->name('words.upload');
     Route::post('/words/upload', [WordUploadController::class, 'store'])->name('words.upload.store');
-    
-    // Games
-    Route::get('/games', [GameController::class, 'index'])->name('games.index');
-    Route::get('/games/matching-pairs', [GameController::class, 'matchingPairs'])->name('games.matching-pairs');
 });
+
+// Games (publicly accessible - no authentication required)
+Route::get('/games', [GameController::class, 'index'])->name('games.index');
+Route::get('/games/matching-pairs', [GameController::class, 'matchingPairs'])->name('games.matching-pairs');
+Route::get('/games/match-madness', [GameController::class, 'matchMadness'])->name('games.match-madness');
 
 // Admin routes (super admin only)
 Route::middleware(['auth', 'superadmin'])->prefix('admin')->name('admin.')->group(function () {

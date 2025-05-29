@@ -6,10 +6,12 @@ use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\Admin\UserApprovalController;
 use App\Http\Controllers\GameController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

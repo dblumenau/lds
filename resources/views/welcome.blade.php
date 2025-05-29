@@ -26,7 +26,7 @@
                     {{-- Logo and Brand --}}
                     <div class="flex items-center">
                         <a href="/" class="flex items-center space-x-3">
-                            <img src="{{ asset('swift_danish_logo.png') }}" alt="Swift Danish" class="h-10 w-auto">
+                            <img src="{{ asset('images/swift_danish_logo.png') }}" alt="Swift Danish" class="h-10 w-auto">
                             <span class="font-bold text-xl text-indigo-600">Swift Danish</span>
                         </a>
                     </div>
@@ -81,6 +81,10 @@
         {{-- Hero Section --}}
         <section class="px-4 py-12 sm:px-6 lg:px-8">
             <div class="max-w-7xl mx-auto text-center">
+                {{-- Prominent Logo --}}
+                <div class="mb-8">
+                    <img src="{{ asset('images/swift_danish_logo.png') }}" alt="Swift Danish" class="mx-auto h-32 sm:h-40 lg:h-48 w-auto shadow-lg rounded-lg">
+                </div>
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
                     Swift Danish
                 </h1>

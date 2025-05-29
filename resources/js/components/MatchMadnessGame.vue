@@ -47,31 +47,43 @@
         <div class="word-column">
           <div
             v-for="(word, index) in leftWords"
-            :key="word.id"
-            class="word-button"
-            :class="{
-              'selected': selectedLeft === index,
-              'fading': word.fading
-            }"
-            @click="selectWord('left', index)"
+            :key="`left-${index}`"
+            class="word-slot"
           >
-            {{ word.danish }}
+            <div
+              v-if="word"
+              class="word-button"
+              :class="{
+                'selected': selectedLeft === index,
+                'fading': word.fading,
+                'fade-in': word.fadeIn
+              }"
+              @click="selectWord('left', index)"
+            >
+              {{ word.danish }}
+            </div>
           </div>
         </div>
 
         <div class="word-column">
           <div
             v-for="(word, index) in rightWords"
-            :key="word.id"
-            class="word-button"
-            :class="{
-              'selected': selectedRight === index,
-              'fading': word.fading,
-              'error-flash': word.errorFlash
-            }"
-            @click="selectWord('right', index)"
+            :key="`right-${index}`"
+            class="word-slot"
           >
-            {{ word.english }}
+            <div
+              v-if="word"
+              class="word-button"
+              :class="{
+                'selected': selectedRight === index,
+                'fading': word.fading,
+                'error-flash': word.errorFlash,
+                'fade-in': word.fadeIn
+              }"
+              @click="selectWord('right', index)"
+            >
+              {{ word.english }}
+            </div>
           </div>
         </div>
       </div>
@@ -210,9 +222,20 @@ export default {
       // Get first 5 pairs
       this.currentWordPairs = this.allWordPairs.slice(0, 5);
       
-      // Separate and shuffle left and right words
-      this.leftWords = [...this.currentWordPairs];
-      this.rightWords = [...this.currentWordPairs].sort(() => Math.random() - 0.5);
+      // Initialize arrays with 5 slots
+      this.leftWords = new Array(5);
+      this.rightWords = new Array(5);
+      
+      // Place words in slots
+      this.currentWordPairs.forEach((word, index) => {
+        this.leftWords[index] = { ...word };
+      });
+      
+      // Shuffle right words
+      const shuffledPairs = [...this.currentWordPairs].sort(() => Math.random() - 0.5);
+      shuffledPairs.forEach((word, index) => {
+        this.rightWords[index] = { ...word };
+      });
     },
     
     startTimer() {
@@ -225,6 +248,10 @@ export default {
     },
     
     selectWord(column, index) {
+      // Don't select null slots
+      if (column === 'left' && !this.leftWords[index]) return;
+      if (column === 'right' && !this.rightWords[index]) return;
+      
       if (column === 'left') {
         if (this.selectedLeft === index) {
           this.selectedLeft = null;
@@ -274,21 +301,50 @@ export default {
       // Increment matches
       this.matchesCompleted++;
       
-      // After fade animation, replace with new words
+      // After fade animation, mark slots as empty
       setTimeout(() => {
-        if (this.nextPairIndex < this.allWordPairs.length) {
-          // Get next word pair
-          const nextPair = this.allWordPairs[this.nextPairIndex];
-          this.nextPairIndex++;
-          
-          // Replace the faded words
-          this.leftWords[leftIndex] = { ...nextPair, fading: false };
-          this.rightWords[rightIndex] = { ...nextPair, fading: false };
-        } else {
-          // No more words, remove the slots
-          this.leftWords[leftIndex] = { danish: '', english: '', id: -1, fading: true };
-          this.rightWords[rightIndex] = { danish: '', english: '', id: -1, fading: true };
-        }
+        // Mark slots as empty (null)
+        this.leftWords[leftIndex] = null;
+        this.rightWords[rightIndex] = null;
+        
+        // Schedule replacement after delay (2-4 seconds)
+        const replacementDelay = 2000 + Math.random() * 2000;
+        
+        setTimeout(() => {
+          if (this.nextPairIndex < this.allWordPairs.length) {
+            // Get next word pair
+            const nextPair = this.allWordPairs[this.nextPairIndex];
+            this.nextPairIndex++;
+            
+            // Find random empty slots
+            const emptyLeftIndices = this.leftWords
+              .map((word, index) => word === null ? index : -1)
+              .filter(index => index !== -1);
+            const emptyRightIndices = this.rightWords
+              .map((word, index) => word === null ? index : -1)
+              .filter(index => index !== -1);
+            
+            if (emptyLeftIndices.length > 0 && emptyRightIndices.length > 0) {
+              // Choose random empty slots
+              const randomLeftIndex = emptyLeftIndices[Math.floor(Math.random() * emptyLeftIndices.length)];
+              const randomRightIndex = emptyRightIndices[Math.floor(Math.random() * emptyRightIndices.length)];
+              
+              // Place new words with fade-in animation
+              this.leftWords[randomLeftIndex] = { ...nextPair, fading: false, fadeIn: true };
+              this.rightWords[randomRightIndex] = { ...nextPair, fading: false, fadeIn: true };
+              
+              // Remove fade-in class after animation
+              setTimeout(() => {
+                if (this.leftWords[randomLeftIndex]) {
+                  this.leftWords[randomLeftIndex].fadeIn = false;
+                }
+                if (this.rightWords[randomRightIndex]) {
+                  this.rightWords[randomRightIndex].fadeIn = false;
+                }
+              }, 500);
+            }
+          }
+        }, replacementDelay);
         
         // Check if all matches completed
         if (this.matchesCompleted === 30) {
@@ -341,240 +397,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.match-madness-container {
-  max-width: 425px;
-  margin: 0 auto;
-  padding: 20px;
-  min-height: 100vh;
-  background-color: #f5f5f5;
-}
-
-/* Intro Screen */
-.intro-screen {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.intro-content {
-  text-align: center;
-  background: white;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.intro-title {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 16px;
-  color: #1f2937;
-}
-
-.intro-description {
-  font-size: 18px;
-  color: #4b5563;
-  margin-bottom: 24px;
-}
-
-.intro-instructions {
-  font-size: 16px;
-  color: #6b7280;
-  margin-bottom: 32px;
-  line-height: 1.5;
-}
-
-.start-button {
-  background-color: #3b82f6;
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
-  padding: 12px 32px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.start-button:hover {
-  background-color: #2563eb;
-}
-
-/* Game Screen */
-.game-screen {
-  background: white;
-  border-radius: 16px;
-  padding: 20px;
-  min-height: calc(100vh - 40px);
-}
-
-.game-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.close-button {
-  background: none;
-  border: none;
-  color: #6b7280;
-  cursor: pointer;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.close-button:hover {
-  color: #4b5563;
-}
-
-.progress-bar {
-  flex: 1;
-  height: 12px;
-  background-color: #e5e7eb;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: #10b981;
-  transition: width 0.3s ease;
-}
-
-.timer {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 18px;
-  font-weight: 600;
-  color: #4b5563;
-}
-
-.game-title {
-  text-align: center;
-  font-size: 24px;
-  font-weight: 600;
-  color: #4b5563;
-  margin-bottom: 32px;
-}
-
-/* Word Columns */
-.words-container {
-  display: flex;
-  gap: 20px;
-}
-
-.word-column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.word-button {
-  background-color: #e5e7eb;
-  color: #1f2937;
-  font-size: 18px;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  user-select: none;
-}
-
-.word-button:hover {
-  background-color: #d1d5db;
-}
-
-.word-button.selected {
-  background-color: #3b82f6;
-  color: white;
-}
-
-.word-button.fading {
-  opacity: 0;
-  transform: scale(0.95);
-  transition: all 0.4s ease;
-}
-
-.word-button.error-flash {
-  background-color: #ef4444 !important;
-  color: white;
-  animation: errorFlash 0.3s;
-}
-
-@keyframes errorFlash {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(0.95); }
-}
-
-/* Results Screen */
-.results-screen {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.results-content {
-  text-align: center;
-  background: white;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.results-title {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 16px;
-  color: #1f2937;
-}
-
-.genius-message {
-  font-size: 20px;
-  color: #10b981;
-  margin-bottom: 24px;
-  font-weight: 600;
-}
-
-.results-stats {
-  margin-bottom: 32px;
-}
-
-.matches-made {
-  font-size: 24px;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 8px;
-}
-
-.matches-left {
-  font-size: 18px;
-  color: #6b7280;
-}
-
-.play-again-button {
-  background-color: #3b82f6;
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
-  padding: 12px 32px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.play-again-button:hover {
-  background-color: #2563eb;
-}
+<style lang="scss" scoped>
+@import './MatchMadnessGame.scss';
 </style>

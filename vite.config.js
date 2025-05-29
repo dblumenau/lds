@@ -21,7 +21,7 @@ export default defineConfig({
             targets: [
                 {
                     src: 'resources/assets/images/**/*',
-                    dest: 'images'
+                    dest: '../images'
                 }
             ]
         }),

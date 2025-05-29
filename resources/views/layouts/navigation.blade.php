@@ -27,8 +27,8 @@
                             </x-nav-link>
                         @endif
                     @endauth
-                    <x-nav-link :href="route('games.index')" :active="request()->routeIs('games.*')">
-                        {{ __('Mini Games') }}
+                    <x-nav-link :href="route('games.index')" :active="request()->routeIs('games.*')" class="font-semibold text-indigo-600 hover:text-indigo-700">
+                        🎮 {{ __('Mini Games') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -114,8 +114,8 @@
                     </x-responsive-nav-link>
                 @endif
             @endauth
-            <x-responsive-nav-link :href="route('games.index')" :active="request()->routeIs('games.*')">
-                {{ __('Mini Games') }}
+            <x-responsive-nav-link :href="route('games.index')" :active="request()->routeIs('games.*')" class="font-semibold">
+                🎮 {{ __('Mini Games') }}
             </x-responsive-nav-link>
         </div>
 

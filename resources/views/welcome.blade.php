@@ -7,6 +7,9 @@
 
     <title>Swift Danish - Tailored for You</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet" />
@@ -22,8 +25,8 @@
                 <div class="flex justify-between h-16">
                     {{-- Logo and Brand --}}
                     <div class="flex items-center">
-                        <a href="/" class="flex items-center space-x-2">
-                            <span class="text-2xl">🇩🇰</span>
+                        <a href="/" class="flex items-center space-x-3">
+                            <img src="{{ asset('swift_danish_logo.png') }}" alt="Swift Danish" class="h-10 w-auto">
                             <span class="font-bold text-xl text-indigo-600">Swift Danish</span>
                         </a>
                     </div>
@@ -85,37 +88,155 @@
                     Tailored for You
                 </p>
                 <p class="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                    Master Danish through interactive mini-games, bite-sized lessons, and engaging challenges. 
-                    Start your language journey today!
+                    Master Danish through interactive mini-games and personalized learning. 
+                    Upload your own word pairs and practice with games tailored to your needs!
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="{{ route('games.index') }}" class="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3 rounded-lg text-lg font-semibold transition-colors shadow-lg transform hover:scale-105">
+                        🎮 Play Mini Games Now
+                    </a>
                     @guest
-                        <a href="{{ route('register') }}" class="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
-                            Start Learning Free
+                        <a href="{{ route('register') }}" class="bg-white text-indigo-600 hover:bg-gray-50 px-8 py-3 rounded-lg text-lg font-semibold border-2 border-indigo-600 transition-colors">
+                            Create Account
+                        </a>
+                    @else
+                        <a href="{{ route('words.upload') }}" class="bg-white text-indigo-600 hover:bg-gray-50 px-8 py-3 rounded-lg text-lg font-semibold border-2 border-indigo-600 transition-colors">
+                            📝 Upload Words
                         </a>
                     @endguest
-                    <a href="{{ route('games.index') }}" class="bg-white text-indigo-600 hover:bg-gray-50 px-8 py-3 rounded-lg text-lg font-semibold border-2 border-indigo-600 transition-colors">
-                        Explore Games
-                    </a>
+                </div>
+            </div>
+        </section>
+
+        {{-- Key Features Highlight --}}
+        <section class="px-4 py-16 sm:px-6 lg:px-8 bg-indigo-50">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
+                            🎮 Interactive Mini Games
+                        </h2>
+                        <p class="text-lg text-gray-700 mb-6">
+                            Learning Danish has never been more fun! Our mini games turn vocabulary practice into an engaging experience:
+                        </p>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">✓</span>
+                                <span><strong>Memory Pairs:</strong> Classic card-matching game with Danish-English word pairs</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">✓</span>
+                                <span><strong>Match Madness:</strong> Fast-paced word matching against the clock</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">✓</span>
+                                <span><strong>More games coming:</strong> Word Builder, Sentence Constructor, and more!</span>
+                            </li>
+                        </ul>
+                        <a href="{{ route('games.index') }}" class="inline-flex items-center bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-lg font-semibold transition-colors">
+                            Play Games Now
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23f3f4f6'/%3E%3Crect x='50' y='50' width='140' height='90' rx='8' fill='%234f46e5' opacity='0.8'/%3E%3Crect x='210' y='50' width='140' height='90' rx='8' fill='%236366f1' opacity='0.8'/%3E%3Crect x='50' y='160' width='140' height='90' rx='8' fill='%238b5cf6' opacity='0.8'/%3E%3Crect x='210' y='160' width='140' height='90' rx='8' fill='%23a78bfa' opacity='0.8'/%3E%3Ctext x='120' y='100' text-anchor='middle' fill='white' font-size='20' font-weight='bold'%3EHej%3C/text%3E%3Ctext x='280' y='100' text-anchor='middle' fill='white' font-size='20' font-weight='bold'%3EHello%3C/text%3E%3Ctext x='120' y='210' text-anchor='middle' fill='white' font-size='20' font-weight='bold'%3ETak%3C/text%3E%3Ctext x='280' y='210' text-anchor='middle' fill='white' font-size='20' font-weight='bold'%3EThanks%3C/text%3E%3C/svg%3E" alt="Memory game preview" class="w-full rounded-lg">
+                        <p class="text-center text-gray-600 mt-4">Memory Pairs game in action</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- Custom Word Upload Feature --}}
+        <section class="px-4 py-16 sm:px-6 lg:px-8 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="order-2 lg:order-1">
+                        <div class="bg-gray-50 p-8 rounded-xl">
+                            <div class="space-y-4">
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <div class="flex justify-between items-center">
+                                        <span class="font-semibold">Danish</span>
+                                        <span class="font-semibold">English</span>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <div class="flex justify-between items-center">
+                                        <span>Hej</span>
+                                        <span>Hello</span>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <div class="flex justify-between items-center">
+                                        <span>Farvel</span>
+                                        <span>Goodbye</span>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <div class="flex justify-between items-center">
+                                        <span>Tak</span>
+                                        <span>Thanks</span>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                                    + Add More Words
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
+                            📝 Personalized Learning
+                        </h2>
+                        <p class="text-lg text-gray-700 mb-6">
+                            Make Swift Danish truly yours! Upload your own Danish-English word pairs and practice with vocabulary that matters to you:
+                        </p>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">✓</span>
+                                <span><strong>Custom vocabulary:</strong> Focus on words relevant to your interests or profession</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">✓</span>
+                                <span><strong>CSV upload:</strong> Easily import word lists from spreadsheets</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">✓</span>
+                                <span><strong>Practice your way:</strong> Your custom words appear in all mini games</span>
+                            </li>
+                        </ul>
+                        @auth
+                            @if(auth()->user()->isApproved())
+                                <a href="{{ route('words.upload') }}" class="inline-flex items-center bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-lg font-semibold transition-colors">
+                                    Upload Your Words
+                                    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                    </svg>
+                                </a>
+                            @else
+                                <p class="text-gray-600 italic">Account approval required to upload custom words</p>
+                            @endif
+                        @else
+                            <a href="{{ route('register') }}" class="inline-flex items-center bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-lg font-semibold transition-colors">
+                                Sign Up to Upload Words
+                                <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </a>
+                        @endauth
+                    </div>
                 </div>
             </div>
         </section>
 
         {{-- Features Grid --}}
-        <section class="px-4 py-16 sm:px-6 lg:px-8 bg-white">
+        <section class="px-4 py-16 sm:px-6 lg:px-8 bg-gray-50">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-3xl sm:text-4xl font-bold text-center text-gray-900 mb-12">
-                    Why Learn with Us?
+                    More Features
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {{-- Feature 1 --}}
-                    <div class="text-center">
-                        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-3xl">🎮</span>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-2">Fun Mini Games</h3>
-                        <p class="text-gray-600">Learn through play with word puzzles, memory games, and interactive challenges</p>
-                    </div>
                     {{-- Feature 2 --}}
                     <div class="text-center">
                         <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -210,17 +331,22 @@
                     Ready to Start Your Danish Journey?
                 </h2>
                 <p class="text-xl text-indigo-100 mb-8">
-                    Join thousands of learners mastering Danish the fun way
+                    Play mini games instantly or create an account to upload your own vocabulary
                 </p>
-                @guest
-                    <a href="{{ route('register') }}" class="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-3 rounded-lg text-lg font-semibold transition-colors inline-block">
-                        Create Free Account
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="{{ route('games.index') }}" class="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-3 rounded-lg text-lg font-semibold transition-colors inline-block shadow-lg transform hover:scale-105">
+                        🎮 Play Games Now
                     </a>
-                @else
-                    <a href="{{ url('/dashboard') }}" class="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-3 rounded-lg text-lg font-semibold transition-colors inline-block">
-                        Go to Dashboard
-                    </a>
-                @endguest
+                    @guest
+                        <a href="{{ route('register') }}" class="bg-indigo-500 text-white hover:bg-indigo-400 px-8 py-3 rounded-lg text-lg font-semibold transition-colors inline-block">
+                            Create Account
+                        </a>
+                    @else
+                        <a href="{{ route('words.upload') }}" class="bg-indigo-500 text-white hover:bg-indigo-400 px-8 py-3 rounded-lg text-lg font-semibold transition-colors inline-block">
+                            Upload Words
+                        </a>
+                    @endguest
+                </div>
             </div>
         </section>
 

@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Laravel Swift Danish Setup Script
+# This script sets up a fresh clone of the repository
+
+set -e
+
+echo "🚀 Setting up Swift Danish (LDS)..."
+
+# Check if we're in the right directory
+if [ ! -f "artisan" ]; then
+    echo "❌ Error: This script must be run from the project root directory"
+    exit 1
+fi
+
+# Create .env file if it doesn't exist
+if [ ! -f ".env" ]; then
+    echo "📝 Creating .env file..."
+    cp .env.example .env
+else
+    echo "✅ .env file already exists"
+fi
+
+# Install Composer dependencies
+echo "📦 Installing PHP dependencies..."
+composer install
+
+# Generate application key
+echo "🔑 Generating application key..."
+php artisan key:generate
+
+# Create SQLite database file
+echo "🗄️  Creating SQLite database..."
+touch database/database.sqlite
+
+# Run migrations with seed
+echo "🌱 Running migrations and seeders..."
+php artisan migrate:fresh --seed
+
+# Install NPM dependencies
+echo "📦 Installing Node dependencies..."
+npm install
+
+# Build assets
+echo "🏗️  Building assets..."
+npm run build
+
+# Clear caches
+echo "🧹 Clearing caches..."
+php artisan optimize:clear
+
+echo "✅ Setup complete!"
+echo ""
+echo "📌 Next steps:"
+echo "   1. Start the development servers:"
+echo "      - Laravel: php artisan serve"
+echo "      - Vite: npm run dev"
+echo "   2. Or use the VS Code task: Run Task > start"
+echo "   3. Visit https://lds.test (if using Laravel Valet)"
+echo ""
+echo "🔐 Default super admin credentials:"
+echo "   Email: admin@example.com"
+echo "   Password: password"
